@@ -13,7 +13,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FE", "FE", "{1BA33EDD-9E72-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{0F857591-75D3-422B-934B-27A0873D13E6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{59BF8685-EE72-461E-87B1-E4C25B18985E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{8AE43ED1-6895-458D-A31D-6BF2306614D8}"
+	ProjectSection(SolutionItems) = preProject
+		Client\.gitignore = Client\.gitignore
+		Client\package.json = Client\package.json
+		Client\README.md = Client\README.md
+		Client\yarn.lock = Client\yarn.lock
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B721951-CCD3-4A42-B666-12506AD9012D}"
+	ProjectSection(SolutionItems) = preProject
+		Client\src\App.css = Client\src\App.css
+		Client\src\App.js = Client\src\App.js
+		Client\src\App.test.js = Client\src\App.test.js
+		Client\src\index.css = Client\src\index.css
+		Client\src\index.js = Client\src\index.js
+		Client\src\logo.svg = Client\src\logo.svg
+		Client\src\serviceWorker.js = Client\src\serviceWorker.js
+		Client\src\setupTests.js = Client\src\setupTests.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{0073AA9F-7CFC-4B87-A8EB-1683AA341D61}"
+	ProjectSection(SolutionItems) = preProject
+		Client\public\favicon.ico = Client\public\favicon.ico
+		Client\public\index.html = Client\public\index.html
+		Client\public\logo192.png = Client\public\logo192.png
+		Client\public\logo512.png = Client\public\logo512.png
+		Client\public\manifest.json = Client\public\manifest.json
+		Client\public\robots.txt = Client\public\robots.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,7 +61,9 @@ Global
 		{1C1E5494-603C-4D9A-9E87-5B7A940EA9EA} = {38B25218-12BC-4E13-80D8-AE5970014392}
 		{1BA33EDD-9E72-4272-B8D8-C8A713708C7C} = {38B25218-12BC-4E13-80D8-AE5970014392}
 		{0F857591-75D3-422B-934B-27A0873D13E6} = {1C1E5494-603C-4D9A-9E87-5B7A940EA9EA}
-		{59BF8685-EE72-461E-87B1-E4C25B18985E} = {1BA33EDD-9E72-4272-B8D8-C8A713708C7C}
+		{8AE43ED1-6895-458D-A31D-6BF2306614D8} = {1BA33EDD-9E72-4272-B8D8-C8A713708C7C}
+		{4B721951-CCD3-4A42-B666-12506AD9012D} = {8AE43ED1-6895-458D-A31D-6BF2306614D8}
+		{0073AA9F-7CFC-4B87-A8EB-1683AA341D61} = {8AE43ED1-6895-458D-A31D-6BF2306614D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31A7A139-5989-4121-AF9C-8566AC841F2C}
