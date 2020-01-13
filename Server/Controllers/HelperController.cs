@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Server.Contracts;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,28 @@ namespace Server.Controllers
         private string botMsgKey = "ChatBotMessages",
                        botAtrribsKey = "LexSessionData",
                        userSessionID = String.Empty;
+        private readonly ILogger<HelperController> logger;
 
-        public HelperController(IAWSLexService awsLexService) 
+        public HelperController(IAWSLexService awsLexService, 
+            ILogger<HelperController> _logger) 
         {
             awsLexSvc = awsLexService;
+            logger = _logger;
         }
 
         [HttpGet]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<List<ChatBotMessage>> GetChatMessage(string userMessage)
         {
+            logger.LogInformation("Get chat Message");
             //Get user session and chat info
             userHttpSession = HttpContext.Session;
             userSessionID = userHttpSession.Id;
-            //botMessages = userHttpSession<List<ChatBotMessage>>(botMsgKey) ?? new List<ChatBotMessage>();
-           // lexSessionData = userHttpSession.Get<Dictionary<string, string>>(botAtrribsKey) ?? new Dictionary<string, string>();
+            botMessages = userHttpSession
+                .Get<List<ChatBotMessage>>(botMsgKey) ?? new List<ChatBotMessage>();
+            lexSessionData 
+                = userHttpSession.Get<Dictionary<string, string>>(botAtrribsKey) ?? new Dictionary<string, string>();
 
             //No message was provided, return to current view
             if (string.IsNullOrEmpty(userMessage)) return botMessages;
@@ -42,20 +49,26 @@ namespace Server.Controllers
             botMessages.Add(new ChatBotMessage()
             { MsgType = MessageType.UserMessage, ChatMessage = userMessage });
 
-            //await postUserData(botMessages);
+            await postUserData(botMessages);
 
             //Call Amazon Lex with Text, capture response
-            //var lexResponse = await awsLexSvc.SendTextMsgToLex(userMessage, lexSessionData, userSessionID);
+            var lexResponse = await awsLexSvc.SendTextMsgToLex(userMessage, lexSessionData, userSessionID);
 
-            //lexSessionData = lexResponse.SessionAttributes;
-            //botMessages.Add(new ChatBotMessage()
-            //{ MsgType = MessageType.LexMessage, ChatMessage = lexResponse.Message });
+            lexSessionData = lexResponse.SessionAttributes;
+            botMessages.Add(new ChatBotMessage()
+            { MsgType = MessageType.LexMessage, ChatMessage = lexResponse.Message });
 
             //Add updated botMessages and lexSessionData object to Session
-            //userHttpSession.Set<List<ChatBotMessage>>(botMsgKey, botMessages);
-            //userHttpSession.Set<Dictionary<string, string>>(botAtrribsKey, lexSessionData);
+            userHttpSession.Set(botMsgKey, botMessages);
+            userHttpSession.Set(botAtrribsKey, lexSessionData);
 
             return botMessages;
+        }
+
+        public async Task<List<ChatBotMessage>> postUserData(List<ChatBotMessage> messages)
+        {
+            //testing
+            return await Task.Run(() => messages);
         }
     }
 }
